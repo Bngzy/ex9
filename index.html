@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Manual Image Carousel with Centered Image and Text</title>
+<style>
+  .carousel {
+    position: relative;
+    width: 500px;
+    height: 300px;
+    overflow: hidden;
+    margin: auto;
+    margin-bottom: 20px;
+  }
+  .carousel img {
+    width: 100%;
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .carousel img.active {
+    display: block;
+  }
+  .carousel-control {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 24px;
+    cursor: pointer;
+    color: #333;
+    user-select: none;
+  }
+  .carousel-control.left {
+    left: 10px;
+  }
+  .carousel-control.right {
+    right: 10px;
+  }
+  .carousel-text {
+    text-align: center;
+    margin-top: 10px;
+    font-size: 14px;
+    color: #666;
+  }
+</style>
+</head>
+<body>
+
+<div class="carousel">
+  <img src="OIP-C (2).jpg" class="active">
+  <img src="OIP-C.jpg">
+</div>
+
+<div class="carousel-controls">
+  <span class="carousel-control left" onclick="prevSlide()">&#10094;</span>
+  <span class="carousel-control right" onclick="nextSlide()">&#10095;</span>
+</div>
+
+<div class="carousel-text">
+  <div class="carousel-title">猪首</div>
+  猪首铜像曾流失海外，后来通过何鸿燊先生的努力得以回归。2003年，何鸿燊先生向中华抢救流失海外文物专项基金捐款600余万元，将猪首铜像购回，并转赠给保利集团，现存放在北京保利艺术博物馆供公众观赏。在所有十二铜首中，猪首铜像是唯一一个以公益方式回归的兽首铜像。
+</div>
+
+<a href="new_file.html" class="learn-more">了解更多</a>
+
+<script>
+let currentSlide = 0;
+const slides = document.querySelectorAll('.carousel img');
+const totalSlides = slides.length;
+
+function showSlide(index) {
+  slides.forEach(slide => {
+    slide.classList.remove('active');
+  });
+  slides[index].classList.add('active');
+}
+
+function nextSlide() {
+  currentSlide = (currentSlide + 1) % totalSlides;
+  showSlide(currentSlide);
+}
+
+function prevSlide() {
+  currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+  showSlide(currentSlide);
+}
+
+// Show the first slide
+showSlide(currentSlide);
+
+// 新增自动播放功能
+let autoPlayInterval;
+function startAutoPlay() {
+  autoPlayInterval = setInterval(nextSlide, 3000); // 每3秒自动播放下一张图片
+}
+
+function stopAutoPlay() {
+  clearInterval(autoPlayInterval);
+}
+
+// 当鼠标悬停在轮播上时停止自动播放，鼠标离开时开始自动播放
+const carousel = document.querySelector('.carousel');
+carousel.addEventListener('mouseenter', stopAutoPlay);
+carousel.addEventListener('mouseleave', startAutoPlay);
+
+// 页面加载时开始自动播放
+startAutoPlay();
+</script>
+
+</body>
+</html>
